@@ -7,7 +7,7 @@ source ~/.bash_profile
 
 version=$(echo ?)
 service=$(sudo systemctl status $folder --no-pager | grep "active (running)" | wc -l)
-errors=$(journalctl -u $folder.service --no-hostname -o cat | grep $(date --utc +%F) | grep -c -E "rror|ERR")
+errors=$(journalctl -n 1000 -u $folder.service --no-hostname -o cat | grep -c -E "rror|ERR")
 prover_identifier=$(journalctl -u $folder.service --no-hostname -o cat | grep "Your current prover identifier is " | tail -1 | awk -F "Your current prover identifier is " '{print $NF}' | cut -d \) -f 1 )
 url=
 
