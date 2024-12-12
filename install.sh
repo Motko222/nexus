@@ -17,7 +17,7 @@ After=network.target
 StartLimitIntervalSec=0
 [Service]
 User=root
-ExecStart=curl https://cli.nexus.xyz/ | sh
+ExecStart=$path/start-console.sh
 Restart=always
 RestartSec=30
 [Install]
