@@ -7,7 +7,7 @@ source ~/.bash_profile
 
 version=$(echo ?)
 service=$(sudo systemctl status $folder --no-pager | grep "active (running)" | wc -l)
-errors=$(journalctl -n 1000 -u $folder.service --no-hostname -o cat | grep -c -E "rror|ERR")
+errors=$(journalctl -u $folder.service --since "1 day ago" --no-hostname -o cat | grep -c -E "rror|ERR")
 prover_identifier=$(cat /root/.nexus/prover-id)
 url=
 
