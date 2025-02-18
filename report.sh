@@ -12,8 +12,8 @@ prover_identifier=$(cat /root/.nexus/prover-id)
 url=
 
 status="ok"
+[ $errors -gt 100 ] && status="warning" && message="errors";
 [ $service -ne 1 ] && status="error" && message="service not running";
-[ $errors -gt 20 ] && status="warning" && message="errors=$errors";
 
 cat >$json << EOF
 {
