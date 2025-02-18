@@ -8,4 +8,4 @@ export PATH="/root/.local/bin:$PATH"
 protoc --version
 cd /root/.nexus/network-api/clients/cli
 rustup target add riscv32i-unknown-none-elf
-apt install screen
+apt install screen -y
