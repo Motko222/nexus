@@ -9,7 +9,7 @@ version=$(echo ?)
 service=$(sudo systemctl status $folder --no-pager | grep "active (running)" | wc -l)
 errors=$(journalctl -u $folder.service --since "1 day ago" --no-hostname -o cat | grep -c -E "rror|ERR")
 node_id=$(cat /root/.nexus/node-id)
-last_proof=$(journalctl -u $folder.service --no-hostname -o cat | grep "Starting proof" | tail -1 | awk '{print $3}' | sed 's/...//')
+last_proof=$(journalctl -u $folder.service --no-hostname -o cat | grep "Starting proof" | tail -1 | awk '{print $NF}' | sed 's/\.//g' )
 
 status="ok";message="last=$last_proof";
 [ $errors -gt 100 ] && status="warning" && message="errors";
