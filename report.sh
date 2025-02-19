@@ -8,8 +8,8 @@ source ~/.bash_profile
 version=$(echo ?)
 service=$(sudo systemctl status $folder --no-pager | grep "active (running)" | wc -l)
 errors=$(journalctl -u $folder.service --since "1 day ago" --no-hostname -o cat | grep -c -E "rror|ERR")
-prover_identifier=$(cat /root/.nexus/prover-id)
-url=
+node_id=$(cat /root/.nexus/node-id)
+last_proof=$(journalctl -u $folder.service --no-hostname -o cat | grep "Starting proof" | tail -1 | awk '{print $NF}' | sed 's/...//')
 
 status="ok"
 [ $errors -gt 100 ] && status="warning" && message="errors";
@@ -33,7 +33,8 @@ cat >$json << EOF
         "message":"$message",
         "service":$service,
         "errors":$errors,
-        "prover_identifier":"$prover_identifier",
+        "node_id":"$node_id",
+        "last_proof":"last_proof",
         "url":"$url"
   }
 }
