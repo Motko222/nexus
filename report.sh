@@ -5,7 +5,7 @@ folder=$(echo $path | awk -F/ '{print $NF}')
 json=~/logs/report-$folder
 source ~/.bash_profile
 
-version=$(echo ?)
+version=$(cat /root/.nexus/network-api/clients/cli/Cargo.toml | grep version | head -1 | awk '{print $NF}' | sed 's/\"//g')
 service=$(sudo systemctl status $folder --no-pager | grep "active (running)" | wc -l)
 errors=$(journalctl -u $folder.service --since "1 day ago" --no-hostname -o cat | grep -c -E "rror|ERR")
 node_id=$(cat /root/.nexus/node-id)
