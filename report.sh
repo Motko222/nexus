@@ -11,7 +11,7 @@ errors=$(journalctl -u $folder.service --since "1 day ago" --no-hostname -o cat 
 node_id=$(cat /root/.nexus/node-id)
 last_proof=$(journalctl -u $folder.service --no-hostname -o cat | grep "Starting proof" | tail -1 | awk '{print $NF}' | sed 's/...//')
 
-status="ok"
+status="ok";message="last=$last_proof";
 [ $errors -gt 100 ] && status="warning" && message="errors";
 [ $service -ne 1 ] && status="error" && message="service not running";
 
@@ -34,8 +34,7 @@ cat >$json << EOF
         "service":$service,
         "errors":$errors,
         "node_id":"$node_id",
-        "last_proof":"last_proof",
-        "url":"$url"
+        "last_proof":"$last_proof"
   }
 }
 EOF
