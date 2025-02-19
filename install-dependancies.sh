@@ -9,20 +9,3 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs/ | sh
 source $HOME/.cargo/env
 rustc --version
 cargo --version
-
-sudo tee /etc/systemd/system/$folder.service > /dev/null <<EOF
-[Unit]
-Description=$folder
-After=network.target
-StartLimitIntervalSec=0
-[Service]
-User=root
-ExecStart=$path/start-console.sh
-Restart=always
-RestartSec=30
-[Install]
-WantedBy=multi-user.target
-EOF
-
-sudo systemctl daemon-reload
-sudo systemctl enable $folder
