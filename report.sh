@@ -12,7 +12,7 @@ node_id=$(cat /root/.nexus/node-id)
 last_proof=$(journalctl -u $folder.service --no-hostname -o cat | grep "Starting proof" | tail -1 | awk '{print $3}' | sed 's/#//g' )
 
 status="ok";message="last=$last_proof";
-[ $errors -gt 100 ] && status="warning" && message="errors";
+[ $errors -gt 100 ] && status="warning" && message="errors=$errors last=$last_proof";
 [ $service -ne 1 ] && status="error" && message="service not running";
 
 cat >$json << EOF
