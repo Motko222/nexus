@@ -34,7 +34,7 @@ cat >$json << EOF
         "service":$service,
         "errors":$errors,
         "node_id":"$node_id",
-        "last_proof":"$last_proof"
+        "proofs":"$proofs"
   }
 }
 EOF
