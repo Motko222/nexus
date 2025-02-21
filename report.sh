@@ -9,10 +9,10 @@ version=$(cat /root/.nexus/network-api/clients/cli/Cargo.toml | grep version | h
 service=$(sudo systemctl status $folder --no-pager | grep "active (running)" | wc -l)
 errors=$(journalctl -u $folder.service --since "1 day ago" --no-hostname -o cat | grep -c -E "rror|ERR")
 node_id=$(cat /root/.nexus/node-id)
-last_proof=$(journalctl -u $folder.service --no-hostname -o cat | grep "Starting proof" | tail -1 | awk '{print $3}' | sed 's/#//g' )
+proofs=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c "ZK proof successfully submitted")
 
-status="ok";message="last=$last_proof";
-[ $errors -gt 100 ] && status="warning" && message="errors=$errors last=$last_proof";
+status="ok";message="proofs=$proofs";
+[ $errors -gt 100 ] && status="warning" && message="errors=$errors proofs=$proofs";
 [ $service -ne 1 ] && status="error" && message="service not running";
 
 cat >$json << EOF
