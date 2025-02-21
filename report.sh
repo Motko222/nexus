@@ -9,14 +9,14 @@ version=$(cat /root/.nexus/network-api/clients/cli/Cargo.toml | grep version | h
 service=$(sudo systemctl status $folder --no-pager | grep "active (running)" | wc -l)
 errors=$(journalctl -u $folder.service --since "1 day ago" --no-hostname -o cat | grep -c -E "rror|ERR")
 node_id=$(cat /root/.nexus/node-id)
-proofs=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c "ZK proof successfully submitted")
+success=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c "ZK proof successfully submitted")
 submit=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c "Submitting ZK proof")
 fetch=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c "Fetching a task to prove")
 
 
 
-status="ok";message="proofs=$fetch/$submit/$proofs";
-[ $errors -gt 100 ] && status="warning" && message="errors=$errors proofs=$fetch/$submit/$proofs";
+status="ok";message="proofs=$fetch/$submit/$success";
+[ $errors -gt 100 ] && status="warning" && message="errors=$errors proofs=$fetch/$submit/$success";
 [ $service -ne 1 ] && status="error" && message="service not running";
 
 cat >$json << EOF
@@ -38,7 +38,9 @@ cat >$json << EOF
         "service":$service,
         "errors":$errors,
         "node_id":"$node_id",
-        "proofs":"$proofs"
+        "fetch":"$fetch",
+        "submit":"$submit",
+        "success":"$success"
   }
 }
 EOF
