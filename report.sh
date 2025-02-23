@@ -9,7 +9,7 @@ version=$(cat /root/.nexus/network-api/clients/cli/Cargo.toml | grep version | h
 service=$(sudo systemctl status $folder --no-pager | grep "active (running)" | wc -l)
 errors=$(journalctl -u $folder.service --since "1 day ago" --no-hostname -o cat | grep -c -E "rror|ERR")
 node_id=$(cat /root/.nexus/node-id)
-success=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c "ZK proof successfully submitted")
+success=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c "ZK proof successfully")
 submit=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c "Submitting ZK proof")
 fetch=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c "Fetching a task to prove")
 
