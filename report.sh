@@ -29,7 +29,7 @@ cat >$json << EOF
        "owner":"$OWNER"
   },
   "fields": {
-        "chain":"testnet2",
+        "chain":"devnet",
         "network":"testnet",
         "version":"$version",
         "status":"$status",
