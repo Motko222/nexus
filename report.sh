@@ -14,7 +14,7 @@ fetch=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat 
 
 
 
-status="ok";message="proofs=$fetch/$submit/$success";
+status="ok";message="proofs=$success/$fetch";
 [ $errors -gt 100 ] && status="warning" && message="errors=$errors proofs=$success/$fetch";
 [ $service -ne 1 ] && status="error" && message="service not running";
 
