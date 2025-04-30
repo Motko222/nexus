@@ -8,7 +8,7 @@ source ~/.bash_profile
 version=$(cat /root/.nexus/nexus-cli/clients/cli/Cargo.toml | grep version | head -1 | awk '{print $NF}' | sed 's/\"//g')
 service=$(sudo systemctl status $folder --no-pager | grep "active (running)" | wc -l)
 errors=$(journalctl -u $folder.service --since "1 day ago" --no-hostname -o cat | grep -c -E "rror|ERR")
-node_id=$(cat /root/.nexus/node-id)
+node_id=$(cat /root/.nexus/config.json | jq -r .node_id)
 success=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c "Proving succeeded")
 fetch=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c "Fetching a task to prove")
 
