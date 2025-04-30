@@ -39,7 +39,8 @@ cat >$json << EOF
         "node_id":"$node_id",
         "fetch":"$fetch",
         "submit":"$submit",
-        "success":"$success"
+        "success":"$success",
+        "url":"id=$node_id"
   }
 }
 EOF
