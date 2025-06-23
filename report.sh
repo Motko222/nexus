@@ -8,7 +8,6 @@ source ~/.bash_profile
 version=$()
 service=$(sudo systemctl status $folder --no-pager | grep "active (running)" | wc -l)
 errors=$(journalctl -u $folder.service --since "1 day ago" --no-hostname -o cat | grep -c -E "rror|ERR")
-node_id=$()
 success=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c "Proving succeeded")
 fetch=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c "Fetching a task to prove")
 
@@ -23,20 +22,20 @@ cat >$json << EOF
   "updated":"$(date --utc +%FT%TZ)",
   "measurement":"report",
   "tags": {
-       "id":"$folder",
+       "id":"$folder-$ID",
        "machine":"$MACHINE",
        "grp":"node",
        "owner":"$OWNER"
   },
   "fields": {
-        "chain":"devnet",
+        "chain":"testnet3",
         "network":"testnet",
         "version":"$version",
         "status":"$status",
         "message":"$message",
         "service":$service,
         "errors":$errors,
-        "node_id":"$node_id",
+        "node_id":"$NODEID",
         "fetch":"$fetch",
         "submit":"$submit",
         "success":"$success",
