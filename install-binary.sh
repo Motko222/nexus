@@ -1,6 +1,9 @@
 path=$(cd -- $(dirname -- "${BASH_SOURCE[0]}") && pwd) 
 folder=$(echo $path | awk -F/ '{print $NF}')
 
+read -p "Sure? " c
+case $c in y|Y) ;; *) exit ;; esac
+
 cd /root
 [ -d cd nexus-cli ] && rm -r nexus-cli
 git clone https://github.com/nexus-xyz/nexus-cli.git
