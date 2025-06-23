@@ -35,11 +35,7 @@ cat >$json << EOF
         "message":"$message",
         "service":$service,
         "errors":$errors,
-        "node_id":"$NODEID",
-        "fetch":"$fetch",
-        "submit":"$submit",
-        "success":"$success",
-        "url":"id=$node_id"
+        "m2":"id=$NODEID"
   }
 }
 EOF
