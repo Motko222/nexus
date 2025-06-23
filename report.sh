@@ -4,6 +4,7 @@ path=$(cd -- $(dirname -- "${BASH_SOURCE[0]}") && pwd)
 folder=$(echo $path | awk -F/ '{print $NF}')
 json=~/logs/report-$folder
 source ~/.bash_profile
+source $path/env
 
 version=$(/root/nexus-cli/clients/cli/target/release/nexus-network -V | awk '{print $NF}')
 service=$(sudo systemctl status $folder --no-pager | grep "active (running)" | wc -l)
