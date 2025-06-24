@@ -33,7 +33,7 @@ cat >$json << EOF
         "message":"$message",
         "service":$service,
         "errors":$errors,
-        "m1":"success=$success"
+        "m1":"success=$success",
         "m2":"id=$NODEID"
   }
 }
