@@ -9,10 +9,7 @@ source $path/env
 version=$(/root/nexus-cli/clients/cli/target/release/nexus-network -V | awk '{print $NF}')
 service=$(sudo systemctl status $folder --no-pager | grep "active (running)" | wc -l)
 errors=$(journalctl -u $folder.service --since "1 day ago" --no-hostname -o cat | grep -c -E "rror|ERR")
-success=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c "Proving succeeded")
-fetch=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c "Fetching a task to prove")
-
-
+success=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c "Successfully submitted proof")
 
 status="ok";message="";
 [ $errors -gt 100 ] && status="warning" && message="too many errors";
@@ -36,6 +33,7 @@ cat >$json << EOF
         "message":"$message",
         "service":$service,
         "errors":$errors,
+        "m1":"success=$success"
         "m2":"id=$NODEID"
   }
 }
