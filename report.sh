@@ -12,7 +12,7 @@ errors=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat
 success=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c "Successfully submitted proof")
 
 status="ok";message="";
-[ $errors -gt 100 ] && status="warning" && message="too many errors";
+[ $errors -gt 500 ] && status="warning" && message="too many errors";
 [ $service -ne 1 ] && status="error" && message="service not running";
 
 cat >$json << EOF
