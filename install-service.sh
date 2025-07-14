@@ -11,7 +11,7 @@ After=network.target
 StartLimitIntervalSec=0
 [Service]
 User=root
-ExecStart=/root/.nexus/bin/nexus-cli start --headless --node-id $NODEID
+ExecStart=/root/nexus-cli/clients/cli/target/release/nexus-network start --headless --node-id $NODEID
 Restart=always
 RestartSec=30
 [Install]
