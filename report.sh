@@ -8,7 +8,7 @@ source $path/env
 
 version=$(/root/nexus-cli/clients/cli/target/release/nexus-network -V | awk '{print $NF}')
 service=$(sudo systemctl status $folder --no-pager | grep "active (running)" | wc -l)
-errors=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c -E "rror|ERR")
+errors=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | | grep -v "Rate limited" | grep -c -E "rror|ERR" )
 success=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c "Proof submitted")
 
 status="ok";message="";
