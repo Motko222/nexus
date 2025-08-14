@@ -6,7 +6,7 @@ json=~/logs/report-$folder
 source ~/.bash_profile
 source $path/env
 
-version=$(/root/nexus-cli/clients/cli/target/release/nexus-network -V | awk '{print $NF}')
+version=$(/root/nexus-cli/clients/cli/target/release/nexus-network -V | awk '{print $2}')
 service=$(sudo systemctl status $folder --no-pager | grep "active (running)" | wc -l)
 errors=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | | grep -v "Rate limited" | grep -c -E "rror|ERR" )
 success=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c "Proof submitted")
