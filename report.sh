@@ -5,6 +5,7 @@ folder=$(echo $path | awk -F/ '{print $NF}')
 json=~/logs/report-$folder
 source ~/.bash_profile
 source $path/env
+source /root/powerloom-mainnet/$CFG_FILE
 
 version=$(/root/nexus-cli/clients/cli/target/release/nexus-network -V | awk '{print $2}')
 service=$(sudo systemctl status $folder --no-pager | grep "active (running)" | wc -l)
@@ -33,7 +34,9 @@ cat >$json << EOF
         "message":"$message",
         "errors":"$errors",
         "m1":"success=$success",
-        "m2":"id=$NODEID"
+        "m2":"id=$NODEID",
+        "url":"$SOURCE_RPC_URL"
+        
   }
 }
 EOF
