@@ -12,8 +12,9 @@ service=$(sudo systemctl status $folder --no-pager | grep "active (running)" | w
 errors=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | | grep -v "Rate limited" | grep -c -E "rror|ERR" )
 success=$(journalctl -u $folder.service --since "1 hour ago" --no-hostname -o cat | grep -c "Proof submitted")
 
-status="ok";message="";
-[ $errors -gt 500 ] && status="warning" && message="too many errors";
+status="ok";message="$success proofs last hour";
+[ $success -eq 0 ] && status="warning" && message="no proof last hour";
+[ $errors -gt 10 ] && status="warning" && message="$errors errors last hour";
 [ $service -ne 1 ] && status="error" && message="service not running";
 
 cat >$json << EOF
